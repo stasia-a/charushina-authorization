@@ -5,9 +5,25 @@ gem 'rails', '3.2.8'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'sqlite3',group: :development
+gem 'pg', group: :production
 
+gem 'bootstrap-sass'
+gem 'bcrypt-ruby'
+gem 'uuidtools'
+gem 'rotp'
+gem 'faker'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
 
+group :development, :test do
+  gem 'rspec-rails'
+end
+
+group  :test do
+  gem 'factory_girl_rails'
+  gem 'capybara'
+end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
