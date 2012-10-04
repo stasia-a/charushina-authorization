@@ -12,4 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
+//= require facebox
+//= require path_name_facebox_images
 //= require_tree .
+

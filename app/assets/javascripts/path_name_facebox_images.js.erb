@@ -1,0 +1,21 @@
+$(function() {
+    $('#signin-link').facebox({
+        loadingImage : "<%= asset_path('facebox/loading.gif') %>",
+        closeImage   : "<%= asset_path('facebox/closelabel.png') %>"
+    });
+
+        $('body').on('submit', '#new_session', function() {
+            $.post(this.action, $(this).serialize(), null, "script")
+                    .complete(function(response) {
+                        switch(response.status) {
+                            case 202:
+                                window.location = response.responseText;
+                                break;
+                            default:
+
+                        }
+                    });
+
+            return false;
+        });
+});

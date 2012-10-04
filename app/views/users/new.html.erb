@@ -1,5 +1,30 @@
-<h1>New user</h1>
+<% content_for(:title) { 'Sign up' } %>
+<h1>Sign up</h1>
 
-<%= render 'form' %>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@user) do |f| %>
+        <%= render 'shared/error_messages' , :object => f.object %>
+
+        <%= f.label :login %>
+        <%= f.text_field :login %>
+
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+
+        <%= f.label :full_name %>
+        <%= f.text_field :full_name, title: 'You can leave this field empty' %>
+
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+
+        <%= f.label :password_confirmation, "Confirmation" %>
+        <%= f.password_field :password_confirmation %>
+
+        <%= f.submit "Create my account", class: "btn btn-large btn-primary" %> or <%= link_to 'Sign in', :new_session %>
+    <% end %>
+  </div>
+</div>
 
 <%= link_to 'Back', users_path %>

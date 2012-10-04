@@ -1,8 +1,13 @@
 class UsersController < ApplicationController
+  skip_before_filter :user_required, :only => [:new, :create]
+  skip_before_filter :session_required, :only => [:new, :create]
+  skip_before_filter :confirmed_session_required, :only => [:new, :create]
+  skip_before_filter  :signed_in_user, :only => [:new, :create]
+  before_filter :correct_user, :only => [:edit, :update ]
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = User.paginate(page: params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -44,10 +49,15 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render json: @user, status: :created, location: @user }
+        session[:first_visit] = true
+        session[:user_id] = @user.id
+        format.html { redirect_to :track_sessions, notice: 'Welcome' }
+        format.json { head :no_content }
       else
-        format.html { render action: "new" }
+        format.html do
+          flash.now.alert = 'Validation failed, please check and try again'
+          render 'new'
+      end
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -60,7 +70,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to @user, success: 'User was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

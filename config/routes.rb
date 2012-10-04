@@ -7,6 +7,17 @@ CharushinaAuthorization::Application.routes.draw do
 
   resources :users
 
+  resources :session, :controller => :sessions, :as => :sessions do
+    member do
+      get :confirm, :resend
+      put :validate
+    end
+    collection do
+      get :track
+      delete :finish
+    end
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
