@@ -1,11 +1,5 @@
-class UsersController < ApplicationController
-  skip_before_filter :user_required, :only => [:new, :create]
-  skip_before_filter :session_required, :only => [:new, :create]
-  skip_before_filter :confirmed_session_required, :only => [:new, :create]
-  skip_before_filter  :signed_in_user, :only => [:new, :create]
-  before_filter :correct_user, :only => [:edit, :update, :destroy ]
-  # GET /users
-  # GET /users.json
+class Admin::UsersController < ApplicationController
+
   def index
     @users = User.paginate(page: params[:page])
 
@@ -15,8 +9,8 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/1
-  # GET /users/1.json
+  # GET admin/users/1
+  # GET admin/users/1.json
   def show
     @user = User.find(params[:id])
 
@@ -26,8 +20,8 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/new
-  # GET /users/new.json
+  # GET admin/users/new
+  # GET admin/users/new.json
   def new
     @user = User.new
 
@@ -37,13 +31,13 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/1/edit
+  # GET admin/users/1/edit
   def edit
     @user = User.find(params[:id])
   end
 
-  # POST /users
-  # POST /users.json
+  # POST admin/users
+  # POST admin/users.json
   def create
     @user = User.new(params[:user])
 
@@ -57,14 +51,14 @@ class UsersController < ApplicationController
         format.html do
           flash.now.alert = 'Validation failed, please check and try again'
           render 'new'
-      end
+        end
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PUT /users/1
-  # PUT /users/1.json
+  # PUT admin/users/1
+  # PUT admin/users/1.json
   def update
     @user = User.find(params[:id])
 
@@ -79,8 +73,8 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
+  # DELETE admin/users/1
+  # DELETE admin /users/1.json
   def destroy
     @user = User.find(params[:id])
     @user.destroy

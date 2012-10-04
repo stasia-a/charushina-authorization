@@ -4,8 +4,11 @@ CharushinaAuthorization::Application.routes.draw do
   match '/home' => 'static_pages#home', as: :home
   match '/about' => 'static_pages#about', as: :about
 
-
   resources :users
+
+  namespace :admin do
+    resources :users
+  end
 
   resources :session, :controller => :sessions, :as => :sessions do
     member do
