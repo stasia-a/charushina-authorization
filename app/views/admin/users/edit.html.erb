@@ -1,2 +1,16 @@
-<h1>Admin::Users#edit</h1>
-<p>Find me in app/views/admin/users/edit.html.erb</p>
+<% content_for(:title) { 'Admin::Edit user' } %>
+<h1>Update your profile</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+
+    <%= render 'form' %>
+
+    <%= gravatar_for @user %>
+    <a href="http://gravatar.com/emails">change</a>
+  </div>
+</div>
+
+
+<%= link_to 'Show', admin_user_path(@user) %> |
+<%= link_to 'Back', admin_users_path %>

@@ -1,2 +1,19 @@
-<h1>Admin::Users#show</h1>
-<p>Find me in app/views/admin/users/show.html.erb</p>
+<p id="notice"><%= notice %></p>
+
+<% content_for(:title) { "Admin::User's page" } %>
+<table class="profile" summary="Profile information">
+  <tr>
+    <td class="main">
+      <h1>
+        <%= gravatar_for @user %>
+      </h1>
+    </td>
+    <td class="sidebar round">
+      <strong>Login</strong> <%= @user.login %><br />
+      <strong>URL</strong>  <%= link_to admin_user_path(@user), @user %>
+    </td>
+  </tr>
+</table>
+
+<%= link_to 'Edit', edit_admin_user_path(@user) %> |
+<%= link_to 'Back', admin_users_path %>
