@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
     current_user?(@user)
   end
 
+
+
   private
   def current_user
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
@@ -44,5 +46,13 @@ class ApplicationController < ActionController::Base
 
   def signed_in_user
     redirect_to root_path, notice: "Please sign in." unless signed_in?
+  end
+
+  def user_is_admin?
+    current_user.admin
+  end
+
+  def admin_required
+    redirect_to root_path, notice: "You are not an admin" unless user_is_admin?
   end
 end
