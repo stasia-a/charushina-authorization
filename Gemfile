@@ -24,6 +24,8 @@ group  :test do
   gem 'factory_girl_rails'
   gem 'capybara'
 end
+
+gem 'simplecov', :require => false, :group => :test
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
