@@ -1,29 +1,22 @@
 <% content_for(:title) { 'All users' }%>
 <h1>Listing users</h1>
 
-<table>
+<table class="table">
   <tr>
     <th>Gravatar</th>
     <th>Login</th>
-    <th>Email</th>
     <th>Full name</th>
-    <th></th>
-    <th></th>
   </tr>
 
   <%= will_paginate %>
 
   <% @users.each do |user| %>
   <tr>
-    <td><%= gravatar_for user %></td>
+    <td><%= link_to (gravatar_for user), user %></td>
     <td><%= user.login %></td>
-    <td><%= user.email %></td>
     <td><%= user.full_name %></td>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
-<% end %>
+  <% end %>
 </table>
 
 <br />

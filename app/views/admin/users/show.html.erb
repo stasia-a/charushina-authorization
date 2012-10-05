@@ -1,18 +1,25 @@
 <p id="notice"><%= notice %></p>
 
 <% content_for(:title) { "Admin::User's page" } %>
-<table class="profile" summary="Profile information">
+<table class="table table-striped">
   <tr>
-    <td class="main">
-      <h1>
-        <%= gravatar_for @user %>
-      </h1>
-    </td>
-    <td class="sidebar round">
-      <strong>Login</strong> <%= @user.login %><br />
-      <strong>URL</strong>  <%= link_to admin_user_path(@user), @user %>
-    </td>
+    <th>Gravatar</th>
+    <th>Login</th>
+    <th>Email</th>
+    <th>Full name</th>
+    <th>Created at</th>
+    <th>Updated at</th>
   </tr>
+
+  <tr>
+    <td><%= gravatar_for @user %></td>
+    <td><%= @user.login %></td>
+    <td><%= @user.email %></td>
+    <td><%= @user.full_name %></td>
+    <td><%= @user.created_at %></td>
+    <td><%= @user.updated_at %></td>
+  </tr>
+
 </table>
 
 <%= link_to 'Edit', edit_admin_user_path(@user) %> |

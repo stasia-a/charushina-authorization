@@ -1,7 +1,12 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  helper_method :current_user, :current_session, :signed_in? , :current_user?
+  helper_method :current_user, :current_session, :signed_in? , :current_user?, :correct_user
   before_filter :user_required, :session_required, :confirmed_session_required, :signed_in_user
+
+  def correct_user
+    @user = User.find(params[:id])
+    current_user?(@user)
+  end
 
   private
   def current_user
@@ -39,10 +44,5 @@ class ApplicationController < ActionController::Base
 
   def signed_in_user
     redirect_to root_path, notice: "Please sign in." unless signed_in?
-  end
-
-  def correct_user
-    @user = User.find(params[:id])
-    redirect_to(root_path) unless current_user?(@user)
   end
 end

@@ -10,7 +10,10 @@
     </td>
     <td class="sidebar round">
       <strong>Login</strong> <%= @user.login %><br />
-      <strong>URL</strong>  <%= link_to user_path(@user), @user %>
+      <strong>URL</strong>  <%= link_to user_path(@user), @user %><br />
+      <% if correct_user %>
+        <strong>Email</strong> <%= link_to @user.email, @user %>
+      <% end %>
     </td>
   </tr>
 </table>
