@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :login, :password, :password_confirmation, :full_name, :admin
+  attr_accessor :admin
+  attr_accessible :email, :login, :password, :password_confirmation, :full_name
   has_secure_password
 
   validates :login, presence: true, uniqueness: true
@@ -10,7 +11,7 @@ class User < ActiveRecord::Base
   validates :full_name, length: { maximum: 26 }
 
   before_save { |user| user.email = email.downcase }
-  after_save {|user| first_user_is_admin}
+  after_save {|user| first_user_is_admin(user)}
   before_validation :assign_auth_secret, on: :create
 
   has_many :sessions

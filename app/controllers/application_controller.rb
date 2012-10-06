@@ -1,12 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  helper_method :current_user, :current_session, :signed_in? , :current_user?, :correct_user
-  before_filter :user_required, :session_required, :confirmed_session_required, :signed_in_user
+  helper_method :current_user, :current_session, :current_user?
+  before_filter :user_required, :session_required, :confirmed_session_required
 
-  def correct_user
-    @user = User.find(params[:id])
-    current_user?(@user)
-  end
 
 
 
@@ -24,7 +20,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_required
-    redirect_to :new_session unless current_user
+    redirect_to :new_session, notice: "Please sign in." unless current_user
   end
 
   def session_required
@@ -36,23 +32,12 @@ class ApplicationController < ActionController::Base
                 :alert => "This device is not recognised" unless current_session.confirmed?
   end
 
-  def signed_in?
-    !current_user.nil?
+  def correct_user_required
+    redirect_to root_path, :alert => "You can't do this " unless current_user?
   end
 
-  def current_user?(user)
-    current_user == user
-  end
-
-  def signed_in_user
-    redirect_to root_path, notice: "Please sign in." unless signed_in?
-  end
-
-  def user_is_admin?
-    current_user.admin
-  end
-
-  def admin_required
-    redirect_to root_path, notice: "You are not an admin" unless user_is_admin?
+  def current_user?
+    @user = User.find(params[:id])
+    current_user == @user
   end
 end

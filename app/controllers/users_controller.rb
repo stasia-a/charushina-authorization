@@ -2,8 +2,8 @@ class UsersController < ApplicationController
   skip_before_filter :user_required, :only => [:new, :create]
   skip_before_filter :session_required, :only => [:new, :create]
   skip_before_filter :confirmed_session_required, :only => [:new, :create]
-  skip_before_filter  :signed_in_user, :only => [:new, :create]
-  before_filter :correct_user, :only => [:edit, :update, :destroy ]
+  #skip_before_filter  :signed_in_user, :only => [:new, :create]
+  before_filter :correct_user_required, :only => [:edit, :update, :destroy ]
   # GET /users
   # GET /users.json
   def index

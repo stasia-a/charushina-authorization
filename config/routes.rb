@@ -1,8 +1,11 @@
 CharushinaAuthorization::Application.routes.draw do
-
+  match '/auth/github/callback', to: 'sessions#create_github'
+  match '/auth/failure', to: 'sessions#failure_github'
   match '/help' => 'static_pages#help', as: :help
   match '/home' => 'static_pages#home', as: :home
   match '/about' => 'static_pages#about', as: :about
+
+
 
   resources :users
 

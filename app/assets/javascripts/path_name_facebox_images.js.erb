@@ -1,7 +1,7 @@
 $(function() {
     $('#signin-link').facebox({
-        loadingImage : "<%= asset_path('facebox/loading.gif') %>",
-        closeImage   : "<%= asset_path('facebox/closelabel.png') %>"
+        closeImage   : "<%= asset_path('closelabel.png') %>" ,
+        loadingImage   : "<%= asset_path('loading.gif') %>"
     });
 
         $('body').on('submit', '#new_session', function() {

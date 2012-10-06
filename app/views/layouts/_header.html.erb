@@ -6,7 +6,7 @@
         <ul class="nav pull-right">
           <li><%= link_to "Home", root_path %></li>
           <li><%= link_to "Help", help_path %></li>
-          <% if signed_in? %>
+          <% if current_user %>
               <li><%= link_to "Users", users_path %></li>
               <li id="fat-menu" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -22,6 +22,7 @@
               </li>
           <% else  %>
               <li><%= link_to "Sign in", new_session_path,id: "signin-link" %></li>
+              <li><%= link_to 'Sign in via GitHub', "/auth/github" %></li>
               <li><%= link_to "Sign up now!", new_user_path %></li>
           <% end %>
         </ul>

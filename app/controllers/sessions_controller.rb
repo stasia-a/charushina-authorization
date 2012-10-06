@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   skip_before_filter :user_required, :only => [:new, :create]
   skip_before_filter :session_required, :only => [:new, :track, :create, :finish]
-  skip_before_filter :confirmed_session_required , :signed_in_user
+  skip_before_filter :confirmed_session_required
 
   layout :choose_layout
 
@@ -39,6 +39,19 @@ class SessionsController < ApplicationController
       end
 
     end
+  end
+
+  def create_github
+    reset_session
+    @session = Session.new(params[:session])
+    @user = User.find_by_github_uid(omniauth["uid"])
+    session[:user_id] = @session.user.id
+    redirect_to :new_sessions, :notice => "Signed in!"
+  end
+
+  def failure_github
+    flash[:notice] = params[:message]
+    redirect '/'
   end
 
   def finish
@@ -132,5 +145,9 @@ class SessionsController < ApplicationController
 
   def choose_layout
     (request.xhr?) ? nil : 'application'
+  end
+
+  def auth_hash
+    request.env['omniauth.auth']
   end
 end

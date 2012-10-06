@@ -15,6 +15,8 @@ gem 'rotp'
 gem 'faker'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
+gem 'omniauth'
+gem 'omniauth-github'
 
 group :development, :test do
   gem 'rspec-rails'

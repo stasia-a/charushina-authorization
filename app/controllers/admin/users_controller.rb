@@ -84,4 +84,13 @@ class Admin::UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+  def user_is_admin?
+    current_user.admin
+  end
+
+  def admin_required
+    redirect_to root_path, notice: "You are not an admin" unless user_is_admin?
+  end
 end
