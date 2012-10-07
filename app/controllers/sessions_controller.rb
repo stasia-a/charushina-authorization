@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
-  skip_before_filter :user_required, :only => [:new, :create]
-  skip_before_filter :session_required, :only => [:new, :track, :create, :finish]
+  skip_before_filter :user_required, :only => [:new, :create, :create_github]
+  skip_before_filter :session_required, :only => [:new, :track, :create, :finish, :create_github, :failure_github]
   skip_before_filter :confirmed_session_required
 
   layout :choose_layout
@@ -44,14 +44,18 @@ class SessionsController < ApplicationController
   def create_github
     reset_session
     @session = Session.new(params[:session])
-    @user = User.find_by_github_uid(omniauth["uid"])
-    session[:user_id] = @session.user.id
-    redirect_to :new_sessions, :notice => "Signed in!"
+    @user = User.find_by_github_uid(auth_hash["uid"])||User.find_from_omniauth(auth_hash)
+    if !(@user.nil?)
+      session[:user_id] = @user.id
+      redirect_to :track_sessions, :notice => "#{auth_hash["info"]["nickname"]}, signed in!"
+    else
+      redirect_to :root, :error => "Something wrong,it could happen if you have different login at this site and GitHub"
+    end
   end
 
   def failure_github
     flash[:notice] = params[:message]
-    redirect '/'
+    redirect_to  :new_sessions, :notice => "Something wrong"
   end
 
   def finish
@@ -138,10 +142,11 @@ class SessionsController < ApplicationController
   end
 
   private
-  def session_required
-    @session = current_user.sessions.find_by_id(params[:id])
-    redirect_to :root unless @session
-  end
+
+  #def session_required
+   # @session = current_user.sessions.find_by_id(params[:id])
+   # redirect_to :root unless @session
+  #end
 
   def choose_layout
     (request.xhr?) ? nil : 'application'

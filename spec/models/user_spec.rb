@@ -1,9 +1,13 @@
 require 'spec_helper'
 
 describe User do
-  context "for anonymouse users"do
-    before(:each) do
-      @user = User.new
-end
+  describe "user" do
+    subject {:user}
+
+    it { should be_valid}
+  end
+
+  describe "admin" do
+
   end
 end

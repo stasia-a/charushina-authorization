@@ -20,6 +20,7 @@ class Session < ActiveRecord::Base
     return false
   end
 
+
   def confirmed?
     !self.client_confirmed_at.nil?
   end

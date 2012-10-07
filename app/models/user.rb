@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessor :admin
+  attr_accessor :admin, :github_uid
   attr_accessible :email, :login, :password, :password_confirmation, :full_name
   has_secure_password
 
@@ -29,5 +29,14 @@ class User < ActiveRecord::Base
 
   def assign_auth_secret
     self.auth_secret = ROTP::Base32.random_base32
+  end
+
+  private
+  def self.find_from_omniauth(omniauth)
+    @user = User.find_by_email(omniauth["info"]["email"])||User.find_by_login(omniauth["info"]["nickname"])
+    if !(@user.nil?)
+      @user.github_uid = omniauth["uid"]
+    end
+    @user
   end
 end
