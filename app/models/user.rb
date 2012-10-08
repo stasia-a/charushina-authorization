@@ -31,7 +31,6 @@ class User < ActiveRecord::Base
     self.auth_secret = ROTP::Base32.random_base32
   end
 
-  private
   def self.find_from_omniauth(omniauth)
     @user = User.find_by_email(omniauth["info"]["email"])||User.find_by_login(omniauth["info"]["nickname"])
     if !(@user.nil?)
